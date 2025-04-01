@@ -22,7 +22,7 @@ jobs:
       run: ./gradlew clean build -x test
 
     - name: 🐳 Log in to DockerHub
-      run: echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+      run: echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u "${{ secrets.DOCKER_NICKNAME }}" --password-stdin
 
     - name: 📦 Build Docker Image
       run: docker build -t ${{ secrets.DOCKER_NICKNAME }}/citest:latest .
@@ -37,7 +37,7 @@ jobs:
         username: ec2-user
         key: ${{ secrets.PRIVATE_SSH }}
         script: |
-          docker pull ${{ secrets.DOCKER_USERNAME }}/citest:latest
+          docker pull ${{ secrets.DOCKER_NICKNAME }}/citest:latest
           docker stop citest || true
           docker rm citest || true
-          docker run -d -p 8080:8080 --name citest ${{ secrets.DOCKER_USERNAME }}/citest:latest
+          docker run -d -p 8080:8080 --name citest ${{ secrets.DOCKER_NICKNAME }}/citest:latest
