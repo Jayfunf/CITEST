@@ -26,6 +26,7 @@ jobs:
 
     - name: 📦 Build Docker Image
       run: docker build -t ${{ secrets.DOCKER_NICKNAME }}/citest:latest .
+      working-directory: CITEST
 
     - name: 🚀 Push Docker Image to DockerHub
       run: docker push ${{ secrets.DOCKER_NICKNAME }}/citest:latest
